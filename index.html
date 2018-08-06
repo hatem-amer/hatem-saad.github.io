@@ -1,70 +1,81 @@
-<!DOCTYPE html>
-<!-- namespace declaration -->
-<html prefix="og: http://ogp.me/ns#">
-  <!-- define microdata scope and type -->
-  <head itemscope itemtype="http://schema.org/Article">
-    <title>Social Site Example</title>
-    <!-- define ogp and itemprop of microdata in one line -->
-    <meta property="og:title" itemprop="name" content="Enjoy Fireworks">
-    <!-- define ogp image -->
-    <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/hatem-53b01.appspot.com/o/7pJiy6VMbJUfs9sdEjwEhLAQaYp2%2F-LIyKNiYPD86JsqmwQwD%2Fgsmarena_009.jpg?alt=media&token=469808d1-eb0d-4f10-b46c-696ebd5a12bf&1533373693421">
-    <!-- use link[href] to define image url for microdata -->
-    <link itemprop="image" href="https://firebasestorage.googleapis.com/v0/b/hatem-53b01.appspot.com/o/7pJiy6VMbJUfs9sdEjwEhLAQaYp2%2F-LIyKNiYPD86JsqmwQwD%2Fgsmarena_009.jpg?alt=media&token=469808d1-eb0d-4f10-b46c-696ebd5a12bf&1533373693421">
-    <!-- define ogp and itemprop of microdata in one line -->
-    <meta property="og:url" content="https://hatem-saad.github.io/discovery-and-distribution/optimizations-for-crawlers/social-sites2.html">
-    <!-- define ogp type -->
-    <meta property="og:type" content="website">
-    <!-- define twitter cards type -->
-    <meta name="twitter:card" content="summary_large_image">
-    <!-- define site's owner twitter id -->
-    <meta name="twitter:site" content="agektmr">
-    <!-- define description for ogp and itemprop of microdata in one line -->
-    <meta property="og:description" itemprop="description"
-     content="Fireworks are beautiful. This article explains how beautiful fireworks are.">
-    <!-- general description (separate with ogp and microdata) -->
-    <meta name="description" content="Fireworks are beautiful.
-     This article explains how beautiful fireworks are.">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.indigo-pink.min.css">
-    <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
-    <style>
-      body {
-        margin: 2em;
-      }
-    </style>
-
-    <meta name="google-signin-scope" content="profile email">
-    <meta name="google-signin-client_id" content="634481097727-12rsb1oi25dq8lbl9bdbdo2r2o2eb1l5.apps.googleusercontent.com">
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-  </head>
-  <body>
-    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
-    <script>
-      function onSignIn(googleUser) {
-        // Useful data for your client-side scripts:
-        var profile = googleUser.getBasicProfile();
-        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-        console.log('Full Name: ' + profile.getName());
-        console.log('Given Name: ' + profile.getGivenName());
-        console.log('Family Name: ' + profile.getFamilyName());
-        console.log("Image URL: " + profile.getImageUrl());
-        console.log("Email: " + profile.getEmail());
-
-        // The ID token you need to pass to your backend:
-        var id_token = googleUser.getAuthResponse().id_token;
-        console.log("ID Token: " + id_token);
-      };
-    </script>
-    <a href="#" onclick="signOut();">Sign out</a>
-<script>
-  function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-    });
-  }
+<script src="https://smartlock.google.com/client"></script>
+<script type="text/javascript">
+window.onGoogleYoloLoad = (googleyolo) => {
+console.log("Yolo loaded!");
+const retrievePromise = googleyolo.retrieve({
+supportedAuthMethods: [
+  "https://accounts.google.com",
+"googleyolo://id-and-password"
+],
+supportedIdTokenProviders: [
+{
+uri: "https://accounts.google.com",
+clientId: "634481097727-12rsb1oi25dq8lbl9bdbdo2r2o2eb1l5.apps.googleusercontent.com"
+}
+]
+});
+retrievePromise.then((credential) => {
+console.log(credential);
+if (credential.password) {
+alert(credential.id);
+} else {
+// A Google Account is retrieved. Since Google supports ID token responses,
+// you can use the token to sign in instead of initiating the Google sign-in
+// flow.
+//useGoogleIdTokenForAuth(credential.idToken);
+}
+}, (error) => {
+console.log(error);
+// Credentials could not be retrieved. In general, if the user does not
+// need to be signed in to use the page, you can just fail silently; or,
+// you can also examine the error object to handle specific error cases.
+// If retrieval failed because there were no credentials available, and
+// signing in might be useful or is required to proceed from this page,
+// you can call `hint()` to prompt the user to select an account to sign
+// in or sign up with.
+if (error.type === 'noCredentialsAvailable') {
+const hintPromise = googleyolo.hint({
+supportedAuthMethods: [
+"https://accounts.google.com"
+],
+supportedIdTokenProviders: [
+{
+uri: "https://accounts.google.com",
+clientId: "634481097727-12rsb1oi25dq8lbl9bdbdo2r2o2eb1l5.apps.googleusercontent.com"
+}]})
+hintPromise.then((credential) => {
+console.log(credential);
+if (credential.idToken) {
+// Send the token to your auth backend.
+useGoogleIdTokenForAuth(credential.idToken)}
+}, (error) => {
+console.log(error);
+switch (error.type) {
+case "userCanceled":
+// The user closed the hint selector. Depending on the desired UX,
+// request manual sign up or do nothing.
+break;
+case "noCredentialsAvailable":
+// No hint available for the session. Depending on the desired UX,
+// request manual sign up or do nothing.
+break;
+case "requestFailed":
+// The request failed, most likely because of a timeout.
+// You can retry another time if necessary.
+break;
+case "operationCanceled":
+// The operation was programmatically canceled, do nothing.
+break;
+case "illegalConcurrentRequest":
+// Another operation is pending, this one was aborted.
+break;
+case "initializationError":
+// Failed to initialize. Refer to error.message for debugging.
+break;
+case "configurationError":
+// Configuration error. Refer to error.message for debugging.
+break;
+default:
+// Unknown error, do nothing.
+}})}})}
 </script>
-  </body>
