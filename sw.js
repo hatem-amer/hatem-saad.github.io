@@ -4,8 +4,13 @@ this.addEventListener('install', function(e) {
   e.waitUntil(caches.open(VERSION).then(cache => {
     return cache.addAll([
       '/',
-      '/index.html',
-      '/sw.js'
+      '/sw.js',
+      '/index.html',      
+      '/manifest/',
+      '/manifest/shop-icon-128.png',
+      '/manifest/shop-icon-192.png',
+      '/manifest/shop-icon-384.png',
+      '/manifest/shop-icon-512.png'
     ]);
   }))
 });
