@@ -1,16 +1,14 @@
 var VERSION = '20';
 
-// this.addEventListener('install', function(e) {
-//   e.waitUntil(caches.open(VERSION).then(cache => {
-//     return cache.addAll([
-//       '/',
-//       '/index.html',
-//       '/sw.js',
-//       '/stylesheets/default.css',
-//       '/javascripts/default.js'
-//     ]);
-//   }))
-// });
+this.addEventListener('install', function(e) {
+  e.waitUntil(caches.open(VERSION).then(cache => {
+    return cache.addAll([
+      '/',
+      '/index.html',
+      '/sw.js'
+    ]);
+  }))
+});
 
 this.addEventListener('fetch', function(e) {
   var tryInCachesFirst = caches.open(VERSION).then(cache => {
