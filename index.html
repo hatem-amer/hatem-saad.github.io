@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script>
       if (ServiceWorker)  {
-     navigator.serviceWorker.register('sw.js').then(function(registration) {
+     navigator.serviceWorker.register('/sw.js').then(function(registration) {
     console.log('Service worker registration succeeded:', registration);
   }, /*catch*/ function(error) {
     console.log('Service worker registration failed:', error);
@@ -16,7 +16,7 @@
   console.log('Service workers are not supported.');
 }
   </script>
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="/manifest.json">
 </head>
 <body>
     <h1>Hi, there!</h1>
