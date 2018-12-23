@@ -1,1 +1,39 @@
+<!DOCTYPE html>
+<html>
 
+<head>
+	<title>Longest Common Subsequence</title>
+</head>
+
+<body>
+	<textarea id="a" rows="4" cols="80">The naive solution for this problem is to generate all subsequences of both given sequences and find the longest matching subsequence</textarea>
+	<textarea id="b" rows="4" cols="80">So the LCS problem has optimal substructure property as the main problem can be solved using solutions to subproblems</textarea>
+	<br>
+	<button type="button" onclick="lcs()">Try it</button>
+	<br>
+	<p id="demo"></p>
+	<script>
+		function lcs() {
+			let a = document.getElementById('a').value
+			let b = document.getElementById('b').value
+			let result = '';
+			for (let x2 = 0; x2 < a.length; x2++) {
+				let sub = '',
+					i2 = 0;
+				for (let x = x2; x < a.length; x++) {
+					for (let i = i2; i < b.length; i++) {
+						if (a[x] === b[i]) {
+							sub += a[x];
+							i2 = i + 1;
+							break;
+						}
+					}
+				}
+				if (sub.length > result.length) result = sub;
+			}
+			document.getElementById("demo").innerHTML = result;
+		}
+	</script>
+</body>
+
+</html>
